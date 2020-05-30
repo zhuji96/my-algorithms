@@ -1,37 +1,33 @@
-import Comparator from "../../utils/Comparator";
+import Comparator from "../../utils/Comparator.js";
+import swap from "../../utils/swap.js";
 
 const comparator = new Comparator();
 
+// 两两比较将最大值推至最后
 export default function bubbleSort(originalArray) {
-    let swapped = false;
-    // Clone original array to prevent its modification.
-    const array = [...originalArray];
-    const last = array.length - 1;
+	const array = [...originalArray];
+	const last = array.length - 1;
 
-    for (let end = last - 1; end >= 0; end -= 1) {
-        swapped = false;
+	for (let end = last - 1; end >= 0; end -= 1) {
+		let swapped = false;
 
-        // step 1: 范围[0, last - 1] 最大冒泡至 last
-        // step 2: 范围[0, last - 2] 最大冒泡至 last-1
-        // ...
-        // step n: 范围[0, 0] 最大冒泡至 1，排序终
-        for (let current = 0; current <= end; current += 1) {
-            // Swap elements if they are in wrong order.
-            const next = current + 1;
-            if (comparator.lessThan(array[next], array[current])) {
-                [array[current], array[next]] = [array[next], array[current]];
+		// step 1: 范围[0, last - 1] 最大冒泡至 last
+		// step 2: 范围[0, last - 2] 最大冒泡至 last-1
+		// ...
+		// step n: 范围[0, 0] 最大冒泡至 1，排序终
+		for (let currentIdx = 0; currentIdx <= end; currentIdx += 1) {
+			const nextIdx = currentIdx + 1;
+			if (comparator.lessThan(array[nextIdx], array[currentIdx])) {
+				swap(array, nextIdx, currentIdx);
 
-                // Register the swap.
-                swapped = true;
-            }
-        }
+				swapped = true;
+			}
+		}
 
-        // If there were no swaps then array is already sorted and there is
-        // no need to proceed.
-        if (!swapped) {
-            return array;
-        }
-    }
+		if (!swapped) {
+			return array;
+		}
+	}
 
-    return array;
+	return array;
 }
