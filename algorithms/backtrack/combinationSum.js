@@ -9,7 +9,7 @@ function combinationSum(nums, target) {
 }
 
 function backtrack(nums, target, start, path, res) {
-    console.log('stack', nums, target, start, path, res);
+    console.log("stack", nums, target, start, path, res);
     if (target < 0) {
         return;
     }
@@ -17,10 +17,10 @@ function backtrack(nums, target, start, path, res) {
         res.push([...path]);
         return;
     }
-    
-    for (let i = start; i < nums.length; i++) {
+
+    for (let i = start + 1; i < nums.length; i++) {
         path.push(nums[i]);
-        backtrack(nums, target-nums[i], i, path, res);
+        backtrack(nums, target - nums[i], i, path, res);
         path.pop();
     }
 }
